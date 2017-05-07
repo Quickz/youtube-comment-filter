@@ -88,7 +88,7 @@
 	{
 		for (let i = 0; i < comments.length; i++)
 		{
-			let comment = comments[i].getElementsByClassName("comment-renderer-text-content")[0];
+			let comment = comments[i].getElementsByClassName("comment-renderer-text")[0];
 			let text = getText(comment);
 
 			let alreadyChecked;
@@ -98,6 +98,15 @@
 			if (currStrToFilter != strToFilter)
 			{
 				comment.classList.remove("hidden-comment-yt");
+				commentToggleBtn = comments[i].getElementsByClassName("filter-toggle-btn-yt")[0];
+
+				// if there's a button to delete				
+				if (commentToggleBtn)
+				{
+					comment.hidden = false;	
+					commentToggleBtn.parentNode.removeChild(commentToggleBtn);
+				}
+				
 				alreadyChecked = false;
 			}
 			else
@@ -109,7 +118,7 @@
 
 				if (text.match(regx))
 				{
-					comment.classList.add("hidden-comment-yt");
+					createCommentToggleBtn(comments[i]);
 				}
 				comment.setAttribute("checked-by-filter-yt", "");
 			}
@@ -127,6 +136,37 @@
 	{
 		var html = element.innerHTML;
 		return html.replace(/<[^>]*>/g, "");
+	}
+
+
+	/**
+	 * creates a button for hiding/showing
+	 * the filtered comment
+	 */
+	function createCommentToggleBtn(commentContainer)
+	{
+		var comment = commentContainer.getElementsByClassName("comment-renderer-text")[0];
+		var btn = document.createElement("button");
+		var text = document.createTextNode("Show filtered comment");
+		btn.appendChild(text);
+		
+		btn.classList.add("filter-toggle-btn-yt");
+		btn.onclick = () => toggleComment(comment, btn);
+		comment.hidden = true;
+
+		// placing button after the comment
+		commentContainer.insertBefore(btn, comment);
+	}
+
+
+	/**
+	 * hides/shows a comment
+	 *
+	 */
+	function toggleComment(comment, button)
+	{
+		comment.hidden = !comment.hidden;
+		button.innerHTML = (comment.hidden ? "Show" : "Hide") + " filtered comment";
 	}
 
 

@@ -1,9 +1,9 @@
 
-.hidden-comment-yt {
-	background: black;
+.filter-toggle-btn-yt {
+	background: #CA1D20;
+	padding: 2px 5px;
+	font-size: 15px;
+	margin: 2px 0;
+	color: white;
+	cursor: pointer;
 }
-
-.hidden-comment-yt:hover {
-	background: white;
-}
-
