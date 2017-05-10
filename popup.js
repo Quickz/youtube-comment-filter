@@ -1,9 +1,11 @@
 	
 var filterText = document.getElementById("filter-txt");
 var saveBtn = document.getElementById("save");
+var options = document.getElementById("options");
 
 saveBtn.addEventListener("click", save);
 filterText.addEventListener("keydown", enterKey);
+options.addEventListener("click", openOptions);
 
 load();
 
@@ -47,4 +49,12 @@ function enterKey(e)
 {
 	if (e.keyCode == 13)
 		save();
+}
+
+
+function openOptions()
+{
+	chrome.runtime.openOptionsPage(function() {
+		alert("done");
+	});
 }
