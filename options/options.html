@@ -24,18 +24,29 @@
 	</div>
 	<div id="container-content">
 
-		<div class="line">
-			<span class="opt-label">Some Option</span>
-			<div class="on-off">
-				<div></div>
-			</div>
-		</div>
-	
+	<div id="options" hidden>
+		Erase filtered comments
+		<label class="switch">
+			<input type="checkbox">
+			<div class="slider"></div>
+		</label>
+	</div>
 
+	<div id="filtered-words-page">
+		
+		<div class="search">
+			<span>ico</span>
+			<input type="text" placeholder="search">
+		</div>
+
+		<div id="filtered-words"></div>
+
+		<input type="text">
+		<button id="add-word" class="opt-btn">Add</button>
 	</div>
 
 </div>
 
-
+<script src="options.js"></script>
 </body>
 </html>
