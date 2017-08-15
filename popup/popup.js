@@ -13,15 +13,15 @@ load();
 function save()
 {
 	chrome.storage.sync.set({
-		"filter": filterText.value
+		"filter": [filterText.value]
 	});
 
-	// background.js
+	// reloads background.js
 	chrome.runtime.sendMessage({
 		"action": "reload-data"
 	});
 
-	// content.js
+	// reloads content.js
 	chrome.tabs.query({
 		"active": true,
 		"currentWindow": true
@@ -41,7 +41,7 @@ function load()
 
 function update(data)
 {
-	filterText.value = data.filter;
+	filterText.value = data.filter[0];
 }
 
 

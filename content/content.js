@@ -84,7 +84,7 @@
 	 * index parameter contains the index
 	 * at which the new comments begin
 	 */
-	function processComments(comments, index, strToFilter)
+	function processComments(comments, index, strsToFilter)
 	{
 		for (let i = 0; i < comments.length; i++)
 		{
@@ -95,7 +95,7 @@
 
 			// if current filter's changed
 			// every comment has to be rechecked
-			if (currStrToFilter != strToFilter)
+			if (currStrToFilter != strsToFilter[0])
 			{
 				comment.classList.remove("hidden-comment-yt");
 				commentToggleBtn = comments[i].getElementsByClassName("filter-toggle-btn-yt")[0];
@@ -114,7 +114,7 @@
 
 			if (!alreadyChecked)
 			{
-				let regx = new RegExp(strToFilter, "i");
+				let regx = new RegExp(strsToFilter[0], "i");
 
 				if (text.match(regx))
 				{
@@ -124,7 +124,7 @@
 			}
 		}
 
-		currStrToFilter = strToFilter;
+		currStrToFilter = strsToFilter[0];
 	}
 
 
