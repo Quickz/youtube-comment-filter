@@ -15,7 +15,7 @@ addWordBtn.addEventListener("click", addSpecifiedWord);
 function addSpecifiedWord()
 {
 	var text = newWord.value;
-	addWord(text);
+	addWord(text, loadedData.length);
 	loadedData.push(text);
 	save(text);
 }
@@ -24,7 +24,7 @@ function addSpecifiedWord()
  * saves the filtered word list content
  * and reloads the word list on the other files
  */
-function save(content)
+function save()
 {
 	chrome.storage.sync.set({
 		"filter": loadedData
@@ -36,13 +36,47 @@ function save(content)
 	});
 }
 
+/**
+ * deletes the specified word form
+ * the list
+ */
+function deleteWord()
+{
+	var entryContainer = this.parentElement;
+	var index = getIndexInParent(entryContainer);
+
+	// deleting data entry
+	loadedData.splice(index, 1);
+	
+	// deleting the visual element for the entry
+	entryContainer.remove();
+
+	save();
+}
+
+/**
+ * takes the element's parent
+ * and finds at which index it is located inside it
+ */
+function getIndexInParent(element)
+{
+	var parent = element.parentElement;
+	for (let i = 0; i < parent.childNodes.length; i++)
+	{
+		if (parent.childNodes[i] == element)
+			return i;
+	}
+	return -1;
+}
+
 /*
  * creates an entry for the word
  * container, delete button, text field and stuff
  */
-function addWord(text)
+function addWord(text, index)
 {
 	var container = document.createElement("div");
+	container.dataset.index = index;
 
 	var input = document.createElement("input");
 	input.type = "text";
@@ -53,6 +87,7 @@ function addWord(text)
 	var textNode = document.createTextNode("Delete");
 	deleteBtn.appendChild(textNode);
 	deleteBtn.className = "opt-btn";
+	deleteBtn.addEventListener("click", deleteWord);
 
 	container.appendChild(input);
 	container.appendChild(deleteBtn);
@@ -71,7 +106,7 @@ function update(data)
 {
 	loadedData = data.filter;
 	for (let i = 0; i < loadedData.length; i++)
-		addWord(loadedData[i]);
+		addWord(loadedData[i], i);
 }
 
 
