@@ -1,7 +1,7 @@
 (function() {
 
 	var interval;
-	var currStrToFilter;
+	var currStrToFilter = [];
 
 	/**
 	 * triggers runScript after progress bar has transitioned
@@ -86,16 +86,17 @@
 	 */
 	function processComments(comments, index, strsToFilter)
 	{
+		// if current filter's changed
+		// every comment will have to be unfiltered and rechecked
+		var filterListChanged = !equalArrays(currStrToFilter, strsToFilter);
+		
 		for (let i = 0; i < comments.length; i++)
 		{
 			let comment = comments[i].getElementsByClassName("comment-renderer-text")[0];
 			let text = getText(comment);
-
 			let alreadyChecked;
 
-			// if current filter's changed
-			// every comment has to be rechecked
-			if (currStrToFilter != strsToFilter[0])
+			if (filterListChanged)
 			{
 				comment.classList.remove("hidden-comment-yt");
 				commentToggleBtn = comments[i].getElementsByClassName("filter-toggle-btn-yt")[0];
@@ -106,27 +107,52 @@
 					comment.hidden = false;	
 					commentToggleBtn.parentNode.removeChild(commentToggleBtn);
 				}
-				
-				alreadyChecked = false;
 			}
 			else
 				alreadyChecked = comment.hasAttribute("checked-by-filter-yt");
-
+			
 			if (!alreadyChecked)
 			{
-				let regx = new RegExp(strsToFilter[0], "i");
-
-				if (text.match(regx))
+				for (let j = 0; j < strsToFilter.length; j++)
 				{
-					createCommentToggleBtn(comments[i]);
+					let regx = new RegExp(strsToFilter[j], "i");
+
+					if (text.match(regx))
+					{
+						createCommentToggleBtn(comments[i]);
+						break;
+					}
 				}
 				comment.setAttribute("checked-by-filter-yt", "");
 			}
-		}
-
-		currStrToFilter = strsToFilter[0];
+		}//forend
+		currStrToFilter = strsToFilter;
 	}
 
+	/**
+	 * removes any elements/classes created
+	 * from filtering the comments
+	 */
+	function unfilterComments(comments)
+	{
+		for (let i = 0; i < comments.length; i++)
+		{
+			
+		}
+
+	}
+
+	function equalArrays(arr1, arr2)
+	{
+		if (arr1 && arr2 && arr1.length != arr2.length)
+			return false;
+		for (let i = 0; i < arr1.length; i++)
+		{
+			if (arr1[i] != arr2[i])
+				return false;
+		}
+		return true;
+	}
 
 	/**
 	 * obtains the text the element contains
