@@ -1,0 +1,15 @@
+
+#options {
+	background: #ca1d20;
+	color: white;
+	text-align: center;
+	padding: 2px;
+	font-size: 15px;
+}
+
+#options:hover {
+	background: #9c1619;
+}
+
+
+
