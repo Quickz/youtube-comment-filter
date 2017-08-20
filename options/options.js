@@ -17,9 +17,15 @@ document.onkeydown = processKeys;
 function addSpecifiedWord()
 {
 	var text = newWord.value;
+	if (text == "")
+	{
+		alert("Cannot add an empty value!");
+		return;
+	}
 	addWord(text, loadedData.length);
 	loadedData.push(text);
 	save(text);
+	newWord.value = "";
 }
 
 /**
