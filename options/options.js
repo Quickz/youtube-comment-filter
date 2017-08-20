@@ -7,6 +7,8 @@ var loadedData = [""];
 // loading saved data
 load();
 addWordBtn.addEventListener("click", addSpecifiedWord);
+document.onkeydown = processKeys;
+
 
 /**
  * adds a new word
@@ -109,7 +111,11 @@ function update(data)
 		addWord(loadedData[i], i);
 }
 
-
+function processKeys(e)
+{
+	if (e.keyCode == 13)
+		addSpecifiedWord();
+}
 
 
 
