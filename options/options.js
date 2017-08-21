@@ -2,11 +2,16 @@
 var filteredWordsContainer = document.getElementById("filtered-words");
 var addWordBtn = document.getElementById("add-word");
 var newWord = document.getElementById("new-word");
+var searchInput = document.getElementById("search");
 var loadedData = [""];
 
 // loading saved data
 load();
 addWordBtn.addEventListener("click", addSpecifiedWord);
+
+// triggered when search value's changed
+searchInput.addEventListener("input", search);
+
 document.onkeydown = processKeys;
 
 
@@ -124,4 +129,52 @@ function processKeys(e)
 }
 
 
+/**
+ * searches for words that contain
+ * the search input's value
+ */
+function search()
+{
+	var searchText = searchInput.value;
+
+	// if input's empty
+	// displaying everything
+	if (searchText == "")
+	{
+		showAllFilteredWordEntries();
+		return;
+	}
+
+	// hiding everything except the matched words
+	for (let i = 0; i < loadedData.length; i++)
+	{
+		let entry = getFilteredWordEntry(i);
+		var regx = new RegExp(searchText);
+		if (regx.test(loadedData[i]))
+			entry.hidden = false;
+		else
+			entry.hidden = true;
+	}
+}
+
+/**
+ * goes through filtered word list
+ * and finds the one with the specified index
+ */
+function getFilteredWordEntry(index)
+{
+	var nodes = filteredWordsContainer.childNodes;
+	for (let i = 0; i < nodes.length; i++)
+	{
+		if (nodes[i].dataset.index == index)
+			return nodes[i];
+	}
+}
+
+function showAllFilteredWordEntries()
+{
+	var nodes = filteredWordsContainer.childNodes;
+	for (let i = 0; i < nodes.length; i++)
+		nodes[i].hidden = false;
+}
 
