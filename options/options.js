@@ -31,6 +31,10 @@ function addSpecifiedWord()
 	loadedData.push(text);
 	save(text);
 	newWord.value = "";
+	
+	// necessary to filter out added word
+	// if necessary
+	search();
 }
 
 /**
