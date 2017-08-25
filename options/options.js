@@ -168,11 +168,7 @@ function search()
 function getFilteredWordEntry(index)
 {
 	var nodes = filteredWordsContainer.childNodes;
-	for (let i = 0; i < nodes.length; i++)
-	{
-		if (nodes[i].dataset.index == index)
-			return nodes[i];
-	}
+	return nodes[index];
 }
 
 function showAllFilteredWordEntries()
