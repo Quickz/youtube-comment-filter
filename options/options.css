@@ -160,6 +160,14 @@ input:checked + .slider:before {
 	left: 4px;
 }
 
+.search img {
+	position: absolute;
+	top: 3px;
+	left: 4px;
+	width: 21px;
+	user-drag: none; 
+	-webkit-user-drag: none;
+}
 
 /*
  * standard button style
